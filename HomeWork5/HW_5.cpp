@@ -65,12 +65,14 @@ void sentenсesCut(std::string  &_input) {
     }
     //разбивка текста на предложения по найденным позициям
     int startPos = 0;   // Позиция с которой будет начало копируемого предложения
+    std::string tmpSentence; // string для отдельного предложения
     for (auto it : sentEndPos) {
-        std::string tmpSentence; // string для отдельного предложения
         tmpSentence.assign(_input, startPos, it - startPos);
         sentenсes.insert(std::pair<int, std::string>(words_count(tmpSentence), tmpSentence));
         startPos = it;
     }
+    tmpSentence.assign(_input, startPos, _input.size() - startPos); // добавляем последнее предложение
+    sentenсes.insert(std::pair<int, std::string>(words_count(tmpSentence)+1, tmpSentence)); //+1 т.к. последнее предложение после себя не имеет пробела
     // вывод на экран кол-ва слов и предложения
     std::multimap<int, std::string>::iterator itr;
     for (itr = sentenсes.begin(); itr != sentenсes.end(); ++itr)
